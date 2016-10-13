@@ -1,25 +1,3 @@
-/*
- Demonstration sketch for Adafruit LCD backpack
- using MCP23008 I2C expander and DHT Temperature/Humidity Sensor
- Uses the 5 volt Trinket mini microcontroller with the
- Trinket set at 16 MHz due to timing reading the DHT sensor
- 
- This sketch prints the temperature and humidity to the LCD
- 
- The circuit:
- * 5V to Arduino 5V pin
- * GND to Arduino GND pin
- * Display i2c backpack CLK to Trinket GPIO #2 
- * Display i2c backpack DAT to Trinket GPIO #0 
- * DHT Temperature Sensor to Trinket GPIO #1 (with 1K ohm pullup to 5V)
- 
-// Connect DHT pin 1 (on the left) of the sensor to +5V
-// Connect DHT pin 2 of the sensor to whatever your DHTPIN is
-// Connect DHT pin 4 (on the right) of the sensor to GROUND
-// Connect a 1K resistor from pin 2 (data) to pin 1 (power) of the sensor
-*/
- 
-// include the library code
 #include <Adafruit_LiquidCrystal.h>  // LiquidCrystal using the Wire library
 #include <TinyDHT.h>        // lightweit DHT sensor library
 #include <avr/power.h>      // needed to up clock to 16 MHz on 5v Trinket
@@ -45,14 +23,14 @@ void setup() {  // first line sets a 5V Trinket to 16 MHz operation
   lcd.begin(16, 2);  // set up the LCD's number of rows and columns: 
   lcd.setBacklight(HIGH); // Set backlight (HIGH - on)
 }
- 
+
 void loop() {
-  int8_t h = dht.readHumidity();               // Read humidity
-  int16_t t = dht.readTemperature(TEMPTYPE);   // read temperature
- 
+  int8_t h = dht.readHumidity();
+  int16_t t = dht.readTemperature(TEMPTYPE);
+
   lcd.setCursor(0, 0); 
   if ( t == BAD_TEMP || h == BAD_HUM ) { // if error conditions (see TinyDHT.h)
-     lcd.print("Bad read on DHT");       //   print error message
+     lcd.print("Shit's broke");       //   print error message
   } else {
      lcd.print("Humidity: ");            // write to LCD
      lcd.setCursor(10,0); 
@@ -66,5 +44,5 @@ void loop() {
      lcd.setCursor(10, 1); 
      lcd.print("*F");
   }
-  delay(2000);  // Read temp every second (2000 ms) (DHT sensor max rate)
+  delay(2000);  // (DHT sensor max rate)
 }
